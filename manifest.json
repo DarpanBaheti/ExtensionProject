@@ -1,0 +1,48 @@
+{
+  "name": "BrowserExtension",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description" : "Description ...",
+  "icons": { "16": "icons/16x16.png", "48": "icons/48x48.png", "128": "icons/128x128.png" },
+
+  "content_security_policy": "script-src 'self' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com https://apis.google.com ; object-src 'self'",
+
+  "permissions": [
+    "tabs",
+    "notifications",
+    "webNavigation",
+    "http://*/*",
+    "https://*/*"
+  ],
+
+  "omnibox": { "keyword" : "yeah" },
+
+  "browser_action": {
+    "default_icon": {
+      "19": "icons/19x19.png",
+      "38": "icons/38x38.png"
+    },
+    "default_title": "That's the tool tip",
+    "default_popup": "browseraction/popup.html"
+  },
+
+  "background": {
+    "scripts": ["backscript.js"],
+    "persistent": false
+  },
+
+  "chrome_url_overrides" : {
+    "newtab": "newTab.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["contentScripts/content.js","contentScripts/contentRedditFollow.js","contentScripts/contentSyncLocal.js","contentScripts/contentUpdateSubreddit.js"],
+      "css":["contentScripts/redditFollow.css"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "devtools_page": "devtools/devtools.html"
+}

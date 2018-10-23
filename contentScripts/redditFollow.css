@@ -1,0 +1,28 @@
+
+.subRedditFollowButton {
+    background-color: rgb(0, 121, 211);
+    border: 1px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    z-index: 9999;
+    width: 100%;
+}
+
+/*.subRedditFollowButton {*/
+    /*background-color: rgb(0, 121, 211);*/
+    /*border: 1px;*/
+    /*border-radius: 7px;*/
+    /*color: white;*/
+    /*padding: 15px 32px;*/
+    /*text-align: center;*/
+    /*text-decoration: none;*/
+    /*font-size: 16px;*/
+    /*z-index: 9999;*/
+    /*margin-right: 200px;*/
+    /*margin-top: 25px;*/
+    /*float: right;*/
+ /*}*/

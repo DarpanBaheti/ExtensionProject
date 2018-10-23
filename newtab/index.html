@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Tab HTML</title>
+  <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
+  <link href="style/style.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script async defer src="https://apis.google.com/js/api.js"></script>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+</head>
+
+<body>
+  <!--<button onclick="oAuthTwitter()"> Twitter </button>-->
+  <a href="http://localhost:8081/signInWithTwitter"> Twitter </a>
+
+
+  <div class="dropup">
+    <button class="dropbtn">Menu</button>
+    <div class="dropup-content" id = "dropup-content">
+      <a href="#">Widgets</a>
+    </div>
+  </div>
+
+  <div class="search-container" id = "search-container">
+    <input type="search" id="search-bar" placeholder="What can I help you with today?">
+  </div>
+
+
+  <div id="root">
+  	<div class="container" id="container">
+      <!--<div class="card">-->
+        <!--<a class="twitter-timeline" href="https://twitter.com/imVkohli" data-tweet-limit="3" data-width="400">Tweets by TwitterDev</a>-->
+      <!--</div>-->
+      <!-- <div class="card" text-align="center" id="card-add-app-button"><a href="#" id="add-app-button">+</a></div>  -->
+    </div>
+  </div>
+
+  <script>
+    function oAuthTwitter(e){
+        $.get('http://localhost:8081/signInWithTwitter', function(data) {
+            console.log("Response "+data);
+        });
+    }
+    $(document).ready(function() {
+        var req = new XMLHttpRequest();
+        req.open('GET', document.location, false);
+        req.send(null);
+        var headers = req.getAllResponseHeaders().toLowerCase();
+        console.log(headers);
+    });
+  </script>
+
+
+  <script src="settingsLayout/twitterSettings.js"></script>
+  <script src="settingsLayout/youtubeSettings.js"></script>
+  <script src="settingsLayout/redditSettings.js"></script>
+
+  <script src="utils/settingsLayout.js"></script>
+  <script src="utils/widgetLayout.js"></script>
+  <script src="utils/utils.js"></script>
+
+  <script src="beans/twitterBeans.js"></script>
+  <script src="beans/youtubeOAuth.js"></script>
+  <script src="beans/youtubeAPI.js"></script>
+  <script src="beans/youtubeBeans.js"></script>
+  <script src="beans/redditBeans.js"></script>
+  <script src="beans/beans.js"></script>
+
+  <script src="src/redditFollow.js"></script>
+  <script src="src/syncStorage.js"></script>
+  <script src="src/renderButtonsMenu.js"></script>
+  <script src="src/scriptsUtils.js"></script>
+  <script src="src/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,621 @@
+* {
+  box-sizing: border-box
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Dosis', sans-serif;
+  line-height: 1.6;
+  color: #666;
+  background: #F6F6F6;
+  /*background: url('aperture-vintage-346923-unsplash.jpg') no-repeat center center fixed;*/
+  /*background-size:100% 100%;*/
+}
+
+#root {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  padding: 0.2rem 1.2rem;
+  background: #3498DB;
+  /*background-image: linear-gradient(120deg, #fbc2eb 0%, #a6c1ee 100%);*/
+  /*margin: 0 0 2rem 0;*/
+  margin: 0 0 5px 0;
+  font-size: 1.5rem;
+  color: white;
+}
+
+h3 {
+  text-align: center;
+  font-size: 1.0rem;
+}
+
+#close-card-icon{
+  display: none;
+  position: relative;
+  top:8px;
+  right: 5px;
+  float: right;
+  width:25px;
+  height:25px;
+  background:url(images/close_icon.png) no-repeat center center;
+  opacity: 0.7;
+
+}
+
+#close-innerCard-icon{
+    display: block;
+    position: relative;
+    top:2px;
+    right: 2px;
+    float: right;
+    width:15px;
+    height:15px;
+    background:url(images/close_icon.png) no-repeat center center;
+    opacity: 0.7;
+
+}
+
+#settings-card-icon{
+  display: none;
+  position: relative;
+  top:8px;
+  left: 5px;
+  float: left;
+  width:25px;
+  height:25px;
+  background:url(images/settings-button.png) no-repeat center center;
+  opacity: 0.5;
+}
+
+/*img {
+  display: block;
+  margin: 1rem auto;
+  max-width: 100%;
+}*/
+
+p {
+  padding: 0 2.5rem 2.5rem;
+  margin: 0;
+  font-size: 15px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 50px;
+
+  /*flex-wrap: nowrap;*/
+  /*overflow-x: auto;*/
+}
+
+.card {
+  /*margin: 1rem;*/
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+  /*margin-top: 25px;*/
+  /*margin-bottom: 25px;*/
+  margin: 20px;
+  background: #CCC;
+  box-shadow: 2px 4px 25px rgba(0, 0, 0, .1);
+  /*border-radius: 12px;*/
+  /*overflow: hidden;*/
+  transition: all .2s linear;
+  width:30%;
+  height:400px;
+  /*flex: 0 1 200px;*/
+  overflow:scroll;
+  overflow-y:scroll;
+  overflow-x:hidden;
+
+  flex: 0 0 auto;
+}
+
+.card:hover {
+  box-shadow: 2px 8px 45px rgba(0, 0, 0, .15);
+  transform: translate3D(0, -2px, 0);
+}
+
+.card:hover #close-card-icon {
+  display: block;
+}
+
+.card:hover #settings-card-icon {
+  display: block;
+}
+
+/*@media screen and (min-width: 600px) {
+  .card {
+    flex: 1 1 calc(50% - 2rem);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .card {
+    flex: 1 1 calc(33% - 2rem);
+  }
+}
+*/
+
+.card:nth-child(2n) h1 {
+  background: #44fab0;
+  /*background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);*/
+}
+
+.card:nth-child(4n) h1 {
+  background: #ff9a9e;
+  /*background-image: linear-gradient(120deg, #ff9a9e 0%, #fecfef 100%);*/
+}
+
+.card:nth-child(5n) h1 {
+  background: #ffc3a0;
+  /*background-image: linear-gradient(120deg, #ffc3a0 0%, #ffafbd 100%);*/
+}
+
+
+body {
+  padding-top: 200px;
+}
+
+.search-container {
+  width: 600px;
+  display: block;
+  margin: 0 auto;
+}
+
+input#search-bar {
+  margin: 0 auto;
+  width: 100%;
+  height: 45px;
+  padding: 0 20px;
+  font-size: 1rem;
+  text-align: center;
+  border: 1px solid #D0CFCE;
+  border-radius: 25px;
+  outline: none;
+  background-image:url(http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png); 
+  background-repeat: no-repeat; 
+  background-size: 40px 40px;
+  background-position: left center;
+}
+
+input#search-bar:focus {
+  border: 1px solid #008ABF;
+  transition: 0.35s ease;
+  color: #008ABF;
+}
+input#search-bar:focus::-webkit-input-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+input#search-bar:focus::-moz-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+input#search-bar:focus:-ms-placeholder {
+  transition: opacity 0.45s ease;
+  opacity: 0;
+}
+
+
+/* The container <div> - needed to position the dropup content */
+.dropup {
+    position: fixed;
+    display: inline-block;
+    bottom: 5%;
+    left: 5%;
+}
+
+/* Dropup Button */
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    width: 60px;
+    height: 40px;
+}
+
+/* Dropup content (Hidden by Default) */
+.dropup-content {
+    display: none;
+    position: absolute;
+    bottom: 40px;
+    /*background-color: #f1f1f1;*/
+    background-color: white;
+    width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Show the dropup menu on hover */
+.dropup:hover .dropup-content {
+    display: block;
+}
+
+/* Change the background color of the dropup button when the dropup content is shown */
+.dropup:hover .dropbtn {
+    background-color: #2980B9;
+}
+
+/* Links inside the dropup */
+.dropup-content a {
+    background-color: #3498DB;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 15px;
+}
+
+/* Change color of dropup links on hover */
+/*.dropup-content a:hover {
+  background-color: #ddd
+}
+*/
+
+/* Links inside the dropup */
+.checkbox-container {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* Change color of dropup links on hover */
+.checkbox-container:hover {background-color: #ddd}
+
+/*input[type="checkbox"]{
+  zoom:1.2;
+}*/
+
+.menu-checkbox{
+  zoom:1.2;
+}
+
+#add-app-button {
+    display: block;
+    position:relative;
+    /*top:8px;
+    right: 5px;*/
+    margin: auto auto;
+    color: #3498DB;
+    font-weight: bold;
+    width: 36px;
+    border-radius: 19px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color .15s, transform .15s;
+    font-size: 75px;
+    line-height: 1;
+    font-family: arial, helvetica, sans-serif;
+    z-index: 5;
+    text-shadow: 0 0 5px rgba(0,0,0,.1);
+    zoom: 1.35;
+    text-shadow: 0 0 3px rgba(0, 0, 0, .3);
+}
+
+.innerCard {
+  display: inline-block;
+  background: white;
+  margin-top: 3px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  width: 350px;
+  height: auto;
+}
+
+.cardItem {
+  display: flex;
+  flex-direction: row;
+  /*height: 80px;*/
+  padding: 10px 0;
+  margin-bottom: 20px;
+  height: auto;
+}
+
+.item-image {
+  margin-right:10px;
+  margin-left: 15px;
+  width: 66px;
+}
+
+.itemTextContainer {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+    display: inline-block
+}
+
+/*h3 {
+  color:#222;
+  font-weight:normal;
+}
+#wrapper {
+  width:1110px;
+  margin:30px auto;
+  
+}
+.item {
+  background:#fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  width:320px;
+  height:240px;
+  float:left;
+  padding:14px;
+  margin-right:20px;
+  margin-bottom:20px;
+}
+.item:hover {
+  box-shadow: 0 1px 2px rgba(0,0,0,.3);  
+}*/
+
+/*.modal {
+    position: fixed;
+    top: 30%;
+    left: 44%;
+    width: 500px;
+    line-height: 200px;
+    height: 500px;
+    margin-left: -150px;
+    margin-top: -100px;
+    background-color: white;
+    text-align: center;
+  
+    z-index: 10;
+    outline: 9999px solid rgba(0,0,0,0.5);
+}*/
+
+.settings-dropdown {
+  position: absolute;
+}
+
+.settings-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 5;
+    width: 350px;
+    height: 390px;
+    margin: 5px;
+}
+
+.show {display: block;}
+
+
+.switch {
+  position: absolute;
+  display: block;
+  right: 20px;
+  top:2px;
+  width: 40px;
+  height: 22px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  float:left;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(17px);
+  -ms-transform: translateX(17px);
+  transform: translateX(17px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.settings-items {
+  display: block;
+  color: black;
+  text-decoration: none;
+  font-size: 15px;
+  text-indent: 30px;
+  /*text-align: center;*/
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.settings-items-header {
+  display: block;
+  color: black;
+  text-decoration: none;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+
+.settings-button {
+  position: absolute;
+  background-color: #4CAF50;
+  color: white;
+  padding: 7px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  cursor: pointer;
+  bottom:25px;
+  right:25px;
+}
+
+
+/*.multiselect {
+  position: absolute;
+  top:0px;
+  right:45px;
+  width: 120px;
+  display: inline-block;
+}
+
+.selectBox {
+  position: absolute;
+  width: 100%;
+}
+
+.selectBox select {
+  width: 100%;
+  font-weight: bold;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}*/
+
+.multiselect {
+  position: absolute;
+  top:0px;
+  right:25px;
+  width: 175px;
+}
+
+.selectBox {
+  width:100%;
+}
+
+.selectBox select {
+  width: 100%;
+  margin-left: -30px;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: -27px;
+    top: 0;
+    bottom: 0;
+}
+
+.settings-list-checkboxes {
+  display: none;
+    position: relative;
+  border: 1px #dadada solid;
+  border-radius: 5px;
+  background-color: #ccc;
+  height:85px;
+    width:195px;
+  overflow:scroll;
+  overflow-y:scroll;
+  overflow-x: hidden;
+    z-index: 9999;
+}
+
+.settings-list-checkboxes label {
+  display: block;
+  text-align: left;
+}
+
+.settings-list-checkboxes label:hover {
+  background-color: #1e90ff;
+}
+
+.plus-button {
+  border: 2px solid lightgrey;
+  background-color: #fff;
+  font-size: 16px;
+  height: 2.0em;
+  width: 2.0em;
+  border-radius: 999px;
+  position: relative;
+  right: -115px;
+}
+
+.plus-button:before {
+    height: 1em;
+    width: 0.2em;
+}
+    
+.plus-button:after {
+    height: 0.2em;
+    width: 1em;
+} 
+
+.plus-button:after, .plus-button:before {
+    content: "";
+    display: block;
+    background-color: grey;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.collapsible {
+  background-color: white;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: center;
+  outline: none;
+  font-size: 15px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+  background-color: #3498DB;
+  color: white;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.collapsible-content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: white;
+}
