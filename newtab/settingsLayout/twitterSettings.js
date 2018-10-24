@@ -5,6 +5,13 @@ function getTwitterSettingsContent(widgetKey) {
     const parameters = widgetConfig['innerCard'];
     const listOfFollowedUsers = parameters['followedUsers'];
 
+    if (parameters.isSignedInStatus == "0") {
+        var twitter_signInButton = "<div class='settings-items'>Twitter Feeds<button class='signInButtons' id='Twitter-signIn'>Sign In</button></div>";
+    }
+    else {
+        var twitter_signInButton = "<div class='settings-items'>Twitter Feeds<button class='signInButtons' id='Twitter-signOut'>Sign Out</button></div>";
+    }
+
     if (parameters.trendingTwitterTopics == "0") {
         var trending_twitterTopics = "<div class='settings-items'>Trending Topics<label class='switch'><input type='checkbox' id='Twitter-trendingTopics-checkbox'> <span class='slider round'></span></label></div>";
     }
@@ -15,11 +22,13 @@ function getTwitterSettingsContent(widgetKey) {
     const twitter_follow = "<div class='settings-items'>Followed Users" + getSelectForm(widgetKey, widgetKey + "-followedUsers", listOfFollowedUsers) + "</div>";
 
     attachTwitterListeners(widgetKey,parameters);
-    return trending_twitterTopics + twitter_follow;
+    return twitter_signInButton + trending_twitterTopics + twitter_follow;
 }
 
 function attachTwitterListeners(widgetKey,parameters) {
     const listOfFollowedUsers = parameters['followedUsers'];
+
+    handleTwitterOAuth(widgetKey);
 
     $("#container").off("change", "#" + "Twitter-trendingTopics-checkbox");
     $("#container").on("change", "#" + "Twitter-trendingTopics-checkbox", function(e) {

@@ -63,13 +63,10 @@ var loadLocalStorage = function() {
 	}
 
 	renderNewTabPage(toloadWidgetButtons, toloadWidgets);
-
-	let loc = localStorage.getItem("userLocation");
-	if(loc === null) {
-		ipLookUp();
-	}
 };
 
 window.onload = function() {
-	loadLocalStorage();
+	generateUniqueUserId();
+	getUserLocationDetails();
+    loadLocalStorage();
 };

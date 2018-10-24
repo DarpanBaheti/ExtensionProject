@@ -9,6 +9,9 @@ function twitterWidget(parameters) {
         if(parameters.trendingTwitterTopics == "1"){
             this.loadTrendingTwitterTopics(card,this.widgetKey);
         }
+        if(parameters.isSignedInStatus == "1") {
+            this.loadUserHomeTimeLine(card,this.widgetKey);
+        }
     };
 
     this.loadTrendingTwitterTopics = function (card,widgetKey,order=2) {
@@ -48,6 +51,14 @@ function twitterWidget(parameters) {
 
     this.loadUserTwitterTimeLine = function (card,widgetKey,innerWidgetKey,userName,topicName,order=1) {
         apiCall = "http://localhost:8081/TwitterUserServlet" + "?user=" + userName;
+        loadInnerCard(apiCall,card,widgetKey,innerWidgetKey,topicName,this.parseData,order);
+    };
+
+    this.loadUserHomeTimeLine = function (card,widgetKey,order=0) {
+        var uniqueUserId = localStorage.getItem("uniqueUserId");
+        apiCall = "http://localhost:8081/TwitterHomeTimeline" + "?userId=" + uniqueUserId;
+        const topicName = "My Feeds";
+        const innerWidgetKey = widgetKey + "-" + "MyFeeds" + "Id";
         loadInnerCard(apiCall,card,widgetKey,innerWidgetKey,topicName,this.parseData,order);
     };
 

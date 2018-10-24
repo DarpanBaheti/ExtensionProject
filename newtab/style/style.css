@@ -619,3 +619,15 @@ input:checked + .slider:before {
   overflow: hidden;
   background-color: white;
 }
+
+
+.signInButtons {
+    position: absolute;
+    right: 20px;
+    width: 80px;
+    height: 30px;
+    background-color: #3498DB;
+    color: white;
+    font-size: inherit;
+    border: 0;
+}

@@ -15,10 +15,6 @@
 </head>
 
 <body>
-  <!--<button onclick="oAuthTwitter()"> Twitter </button>-->
-  <a href="http://localhost:8081/signInWithTwitter"> Twitter </a>
-
-
   <div class="dropup">
     <button class="dropbtn">Menu</button>
     <div class="dropup-content" id = "dropup-content">
@@ -40,21 +36,9 @@
     </div>
   </div>
 
-  <script>
-    function oAuthTwitter(e){
-        $.get('http://localhost:8081/signInWithTwitter', function(data) {
-            console.log("Response "+data);
-        });
-    }
-    $(document).ready(function() {
-        var req = new XMLHttpRequest();
-        req.open('GET', document.location, false);
-        req.send(null);
-        var headers = req.getAllResponseHeaders().toLowerCase();
-        console.log(headers);
-    });
-  </script>
-
+  <script src="apiFunctions/twitterOAuth.js"></script>
+  <script src="apiFunctions/youtubeOAuth.js"></script>
+  <script src="apiFunctions/youtubeAPI.js"></script>
 
   <script src="settingsLayout/twitterSettings.js"></script>
   <script src="settingsLayout/youtubeSettings.js"></script>
@@ -65,8 +49,6 @@
   <script src="utils/utils.js"></script>
 
   <script src="beans/twitterBeans.js"></script>
-  <script src="beans/youtubeOAuth.js"></script>
-  <script src="beans/youtubeAPI.js"></script>
   <script src="beans/youtubeBeans.js"></script>
   <script src="beans/redditBeans.js"></script>
   <script src="beans/beans.js"></script>

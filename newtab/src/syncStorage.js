@@ -90,8 +90,9 @@ function getTwitterConfigJson(widgetKey) {
         innerCard: {
             trendingTwitterTopics: "0",
             followedUsers: {
-                imVkohli: "1"
-            }
+                imVkohli: "0"
+            },
+            isSignedInStatus: "0"
         }
     };
     return JSON.stringify(twitterConfigLocal);
