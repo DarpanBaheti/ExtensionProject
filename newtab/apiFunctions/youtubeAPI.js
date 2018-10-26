@@ -8,7 +8,7 @@ function getRecentUploads(channelName) {
             dataType: 'json',
             data: {
                 'part': 'contentDetails',
-                'forUsername': channelName,
+                'id': channelName,
                 'key': 'AIzaSyDXpwzqSs41Kp9IZj49efV3CSrVxUDAwS0'
             },
             success: function (data) {

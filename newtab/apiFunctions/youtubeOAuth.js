@@ -34,7 +34,11 @@ function initClient() {
 
         $("#container").off("click", "#" + "Youtube-signOut");
         $("#container").on("click", "#" + "Youtube-signOut", function(e) {
-            gapi.auth2.getAuthInstance().signOut();
+            var auth2 = gapi.auth2.getAuthInstance();
+            gapi.auth2.getAuthInstance().signOut().then(function () {
+                auth2.disconnect();
+                sessionStorage.clear();
+            });
         });
     });
 }
@@ -54,6 +58,8 @@ function updateSigninStatus(isSignedIn) {
             youtubeSignInButtonEl.innerText = "Sign Out";
         }
         getUsersLikedVideos();
+        getUsersSubscriptionList();
+        getActivities();
         widgetConfig["innerCard"]["isSignedInStatus"] = "1";
     }
     else{
@@ -63,6 +69,7 @@ function updateSigninStatus(isSignedIn) {
             youtubeSignOutButtonEl.innerText = "Sign In";
         }
         deleteDiv(widgetKey + "-Liked" + "videos");
+        deleteAllDiv(widgetKey + "-" + "subscriptions" + "Id");
         widgetConfig["innerCard"]["isSignedInStatus"] = "0";
     }
     setWidgetLocalStore(widgetKey,widgetConfig);
@@ -107,6 +114,46 @@ function getLikedPlaylist(playListID) {
 // $( document ).ready(function() {
 //     handleYoutubeClientLoad();
 // });
+
+getUsersSubscriptionList = function() {
+    var request = gapi.client.request({
+        'method': 'GET',
+        'path': '/youtube/v3/subscriptions',
+        'params': {'part': 'snippet,contentDetails', 'mine': 'true', 'maxResults':'3'}
+    });
+    // Execute the API request.
+    request.execute(function(response) {
+        let widgetKey = "Youtube";
+        let widgetConfig = getWidgetLocalStore(widgetKey);
+
+        let card = document.getElementById(widgetKey + "Id");
+        for(var i in response.items) {
+            let channelName = response.items[i].snippet.title;
+            let channelId = response.items[i].snippet.resourceId.channelId;
+            let innerWidgetKey = widgetKey + "-" + "subscriptions" + "Id";
+            let topicName = "Subscription: " + channelName;
+            new youtubeWidget("params").loadChannel(card,widgetKey,innerWidgetKey,channelId,topicName,order=0);
+        }
+    });
+};
+
+getActivities = function() {
+    var request = gapi.client.request({
+        'method': 'GET',
+        'path': '/youtube/v3/activities',
+        'params': {'part': 'snippet,contentDetails','mine': 'true', 'maxResults': 50}
+    });
+    // Execute the API request.
+    request.execute(function(response) {
+        console.log(response);
+        for(var i in response.items) {
+            var activityType = response.items[i].snippet.type;
+            if(activityType == "favorite" || activityType == "recommendation" || activityType == "social" ) {
+                console.log(response.items[i]);
+            }
+        }
+    });
+};
 
 $(window).on('load', function() {
     handleYoutubeClientLoad();

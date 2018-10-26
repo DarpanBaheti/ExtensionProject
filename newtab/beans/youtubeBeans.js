@@ -48,7 +48,14 @@ function youtubeWidget(parameters) {
             if (channelsList[channelName] == "1") {
                 const innerWidgetKey = widgetKey + "-" + channelName + "Id";
                 const topicName = "Channel: " + channelName;
-                this.loadChannel(card, widgetKey, innerWidgetKey,channelName,topicName,order);
+
+                let apiCall = "https://www.googleapis.com/youtube/v3/channels?key=AIzaSyDXpwzqSs41Kp9IZj49efV3CSrVxUDAwS0&part=contentDetails,snippet&forUsername=" + channelName;
+                var promise1 = fetchWidgetData(apiCall,this.parseData);
+                promise1.then(function (data) {
+                    let channelId = data.items[0].id;
+                    new youtubeWidget("params").loadChannel(card, widgetKey, innerWidgetKey,channelId,topicName,order=2);
+                });
+                // this.loadChannel(card, widgetKey, innerWidgetKey,channelName,topicName,order);
             }
         }
     };
