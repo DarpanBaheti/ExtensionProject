@@ -31,14 +31,15 @@ function renderButtons(widgetKey, isActive) {
             widgetStatusList[widgetKey] = "1";
             localStorage.setItem("widgetStatusList", JSON.stringify(widgetStatusList));
 
-            setTimeout(()=>{
-                let widgetKey = "Youtube";
-                let widgetConfig = getWidgetLocalStore(widgetKey);
-                if(widgetConfig["innerCard"]["isSignedInStatus"] == "1")
-                    updateSigninStatus(true);
-                else
-                    updateSigninStatus(false);
-            },100);
+            if(widgetKey == "Youtube") {
+                setTimeout(() => {
+                    let widgetConfig = getWidgetLocalStore(widgetKey);
+                    if (widgetConfig["innerCard"]["isSignedInStatus"] == "1")
+                        updateSigninStatus(true);
+                    else
+                        updateSigninStatus(false);
+                }, 100);
+            }
         }
         else {
             var divElement = document.getElementById(widgetDivId);
