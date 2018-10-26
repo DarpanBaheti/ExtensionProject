@@ -42,12 +42,14 @@ function getRedditConfigJson(widgetKey) {
     var redditConfigLocal = {
         rankCard: "1",
         innerCard : {
-            trendingPost: "0",
+            trendingPost: "1",
             trendingSubReddits: "0",
             subRedditLists: {
                 nosleep:"0",
                 tifu:"0"
-            }
+            },
+            isSignedInStatus: "0",
+            refresh_token: "0"
         }
     };
     return JSON.stringify(redditConfigLocal);
@@ -78,7 +80,7 @@ function getYoutubeConfigJson(widgetKey) {
                 nu9nVkroSvU: "1",
                 ExgUVFlGsAM: "1"
             },
-            likedVideosStatus: "0"
+            isSignedInStatus: "0"
         }
     };
     return JSON.stringify(youtubeConfigLocal);

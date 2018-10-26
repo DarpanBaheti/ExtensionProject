@@ -13,18 +13,18 @@ function getYoutubeSettingsContent(widgetKey) {
         listOfElements[elName] = listOfCat[elName].status;
     }
 
-    if (parameters.likedVideosStatus == "0") {
-        var liked_videos = "<div class='settings-items'>Liked Videos<label class='switch'><input type='checkbox' id='Youtube-trending-checkbox'><span class='slider round'></span></label></div>";
+    if (parameters.isSignedInStatus == "0") {
+        var youtube_signInButton = "<div class='settings-items'>Youtube Feeds<button class='signInButtons' id='Youtube-signIn'>Sign In</button></div>";
     }
     else {
-        var liked_videos = "<div class='settings-items'>Liked Videos<label class='switch'><input type='checkbox' id='Youtube-trending-checkbox' checked><span class='slider round'></span></label></div>";
+        var youtube_signInButton = "<div class='settings-items'>Youtube Feeds<button class='signInButtons' id='Youtube-signOut'>Sign Out</button></div>";
     }
 
     var youtube_trending = "<div class='settings-items'>Trending Categories" + getSelectForm(widgetKey, widgetKey + "-trendingCat", listOfElements) + "</div>";
-    var youtube_channels = "<div class='settings-items'>Channels List" + getSelectForm(widgetKey, widgetKey + "-channelsList", listOfChannel) + "</div>";
+    var youtube_channels = "<div class='settings-items'>Channels Picks" + getSelectForm(widgetKey, widgetKey + "-channelsList", listOfChannel) + "</div>";
 
     attachYoutubeListeners(widgetKey,parameters);
-    return liked_videos + youtube_trending + youtube_channels;
+    return youtube_signInButton + youtube_trending + youtube_channels;
 }
 
 function attachYoutubeListeners(widgetKey,parameters) {

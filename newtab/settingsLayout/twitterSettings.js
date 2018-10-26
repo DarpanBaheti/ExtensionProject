@@ -19,7 +19,7 @@ function getTwitterSettingsContent(widgetKey) {
         var trending_twitterTopics = "<div class='settings-items'>Trending Topics<label class='switch'><input type='checkbox' id='Twitter-trendingTopics-checkbox' checked> <span class='slider round'></span></label></div>";
     }
 
-    const twitter_follow = "<div class='settings-items'>Followed Users" + getSelectForm(widgetKey, widgetKey + "-followedUsers", listOfFollowedUsers) + "</div>";
+    const twitter_follow = "<div class='settings-items'>Followed Picks" + getSelectForm(widgetKey, widgetKey + "-followedUsers", listOfFollowedUsers) + "</div>";
 
     attachTwitterListeners(widgetKey,parameters);
     return twitter_signInButton + trending_twitterTopics + twitter_follow;

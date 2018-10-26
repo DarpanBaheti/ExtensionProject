@@ -57,7 +57,7 @@ function twitterWidget(parameters) {
     this.loadUserHomeTimeLine = function (card,widgetKey,order=0) {
         var uniqueUserId = localStorage.getItem("uniqueUserId");
         apiCall = "http://localhost:8081/TwitterHomeTimeline" + "?userId=" + uniqueUserId;
-        const topicName = "My Feeds";
+        const topicName = "Recent Feeds";
         const innerWidgetKey = widgetKey + "-" + "MyFeeds" + "Id";
         loadInnerCard(apiCall,card,widgetKey,innerWidgetKey,topicName,this.parseData,order);
     };

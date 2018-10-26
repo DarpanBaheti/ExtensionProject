@@ -15,12 +15,9 @@ function youtubeWidget(parameters) {
         this.loadTrendingCats(card,this.widgetKey,1);
         this.loadChannels(card,this.widgetKey,2);
 
-        if(parameters.likedVideosStatus == "1") {
-            // this.loadLikedVideos(card,this.widgetKey,3);
-            setTimeout(()=>{
-                getUsersLikedVideos();
-            },100);
-        }
+        // if(parameters.likedVideosStatus == "1") {
+        //     this.loadLikedVideos(card,this.widgetKey,3);
+        // }
     };
 
     this.loadTrendingCats = function (card,widgetKey,order=1) {

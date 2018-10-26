@@ -21,7 +21,7 @@ function oAuthTwitter(e) {
     twitterOAuthWindow = window.open(twitterSignInUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
     twitterOAuthWindow.focus();
 
-    var twitterSignInButtonEl = document.getElementById(e.target.id);
+   x
     var OauthInterval = setInterval(function() {
         if(twitterOAuthWindow.closed) {
             let widgetKey = "Twitter";
@@ -75,6 +75,13 @@ function onSignOut() {
     widgetConfig["innerCard"]["isSignedInStatus"] = "0";
     const widgetConfigJson = JSON.stringify(widgetConfig);
     localStorage.setItem(widgetKey, widgetConfigJson);
+
+    // $.get('http://localhost:8081/signOutFromTwitter', function(data) {
+    //     console.log("Response " + data);
+    // });
+
+    const innerWidgetKey = widgetKey + "-" + "MyFeeds" + "Id";
+    deleteDiv(innerWidgetKey);
 }
 
 // function checkOauthTwitterStatus() {

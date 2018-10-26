@@ -2,9 +2,15 @@ function redditWidget(parameters) {
     this.widgetKey = "Reddit";
     this.apiUrl = "https://www.reddit.com/";
     this.parameters = parameters;
+    this.userAgent = "Extension";
+    this.clientId = "iYzb1bqskWDaDg";
+    this.clientSecret = "PodkAe4ExHY_7cb1S45nH726ln4";
 
     this.renderWidget = function() {
         const card = renderCard(this.widgetKey);
+        if(parameters.isSignedInStatus == "1") {
+            this.loadUserHomeTimeLine(card,this.widgetKey);
+        }
         if(parameters.trendingPost == "1") {
             this.loadTrendingPost(card,this.widgetKey);
         }
@@ -18,6 +24,36 @@ function redditWidget(parameters) {
                 this.loadSubRedditsPost(card,this.widgetKey,subRedditName,innerWidgetKey,topicName);
             }
         }
+    };
+
+    this.loadUserHomeTimeLine = function(card,widgetKey,order=0) {
+        const innerWidgetKey = widgetKey + "-" + "HomeFeeds" + "Id";
+        const topicName = "Home Feeds";
+
+        let widgetConfig = getWidgetLocalStore(widgetKey);
+        let parameters = widgetConfig['innerCard'];
+        let refresh_token = parameters['refresh_token'];
+        const r = new snoowrap({
+            userAgent: this.userAgent,
+            clientId: this.clientId,
+            clientSecret: this.clientSecret,
+            refreshToken: refresh_token
+        });
+        r.getHot().then(data => {
+            var listCardItemObj = new Array();
+            let cnt = 1;
+            for(var i in data) {
+                if(cnt > 10)
+                    break;
+                cnt += 1;
+                dataInfo = data[i];
+                if(dataInfo.thumbnail == "self" || dataInfo.thumbnail == "" || dataInfo.thumbnail == "default" || dataInfo.thumbnail == "nsfw" || dataInfo.thumbnail == undefined || dataInfo.thumbnail == null)
+                    dataInfo.thumbnail = "style/images/reddit_default.jpg";
+                cardItem = new CardItemObj(dataInfo.thumbnail,dataInfo.title + "<br> [ " + dataInfo.subreddit_name_prefixed + " ]","https://www.reddit.com" + dataInfo.permalink, dataInfo.subreddit_name_prefixed);
+                listCardItemObj.push(cardItem);
+            }
+            renderInnerCard(card,widgetKey,innerWidgetKey,topicName,listCardItemObj,order);
+        });
     };
 
     this.loadTrendingPost = function(card,widgetKey,order=1) {

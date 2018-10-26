@@ -5,6 +5,13 @@ function getRedditSettingsContent(widgetKey) {
     const parameters = widgetConfig['innerCard'];
     const listOfElements = parameters['subRedditLists'];
 
+    if (parameters.isSignedInStatus == "0") {
+        var reddit_signInButton = "<div class='settings-items'>Reddit Feeds<button class='signInButtons' id='Reddit-signIn'>Sign In</button></div>";
+    }
+    else {
+        var reddit_signInButton = "<div class='settings-items'>Reddit Feeds<button class='signInButtons' id='Reddit-signOut'>Sign Out</button></div>";
+    }
+
     if (parameters.trendingPost == "0") {
         var trending_posts = "<div class='settings-items'>Trending Posts<label class='switch'><input type='checkbox' id='Reddit-trending-checkbox'><span class='slider round'></span></label></div>";
     }
@@ -22,11 +29,13 @@ function getRedditSettingsContent(widgetKey) {
     const subreddits_follow = "<div class='settings-items'>Subreddits Picks" + getSelectForm(widgetKey, widgetKey + "-follow", listOfElements) + "</div>";
 
     attachRedditListeners(widgetKey,parameters);
-    return trending_posts + trending_subreddits + subreddits_follow;
+    return reddit_signInButton + trending_posts + trending_subreddits + subreddits_follow;
 }
 
 function attachRedditListeners(widgetKey,parameters) {
     const listOfElements = parameters['subRedditLists'];
+
+    handleRedditOAuth(widgetKey);
 
     $("#container").off("change", "#" + "Reddit-trending-checkbox");
     $("#container").on("change", "#" + "Reddit-trending-checkbox", function(e) {

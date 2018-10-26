@@ -1,4 +1,5 @@
 
+var API_KEY = "AIzaSyDfOyxnl6HYzGkI9bIelIPdG6w-G8Qu8g8";
 var CLIENT_ID = '940069828387-qi070615gvg7f7q8km07009eqaqv6jhu.apps.googleusercontent.com';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
@@ -15,7 +16,7 @@ function handleYoutubeClientLoad() {
 // Initializes the API client library and sets up sign-in state listeners.
 function initClient() {
     gapi.client.init({
-        apiKey: 'AIzaSyDfOyxnl6HYzGkI9bIelIPdG6w-G8Qu8g8',
+        apiKey: API_KEY,
         discoveryDocs: DISCOVERY_DOCS,
         clientId: CLIENT_ID,
         scope: SCOPES
@@ -24,34 +25,47 @@ function initClient() {
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
         // Handle the initial sign-in state.
-        // updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
 
-        const widgetKey = "Youtube";
-        $("#container").off("change", "#" + "Youtube-trending-checkbox");
-        $("#container").on("change", "#" + "Youtube-trending-checkbox", function(e) {
-            let card = document.getElementById(widgetKey + "Id");
-            let widgetConfig = getWidgetLocalStore(widgetKey);
-            if (e.target.checked) {
-                gapi.auth2.getAuthInstance().signIn();
-                widgetConfig["innerCard"]["likedVideosStatus"] = "1";
-            }
-            else {
-                deleteDiv(widgetKey + "-Liked" + "videos");
-                gapi.auth2.getAuthInstance().signOut();
-                widgetConfig["innerCard"]["likedVideosStatus"] = "0";
-            }
-            setWidgetLocalStore(widgetKey,widgetConfig);
+        $("#container").off("click", "#" + "Youtube-signIn");
+        $("#container").on("click", "#" + "Youtube-signIn", function(e) {
+            gapi.auth2.getAuthInstance().signIn();
+        });
+
+        $("#container").off("click", "#" + "Youtube-signOut");
+        $("#container").on("click", "#" + "Youtube-signOut", function(e) {
+            gapi.auth2.getAuthInstance().signOut();
         });
     });
 }
 
 // Called when the signed in status changes, to update the UI appropriately. After a sign-in, the API is called.
 function updateSigninStatus(isSignedIn) {
-    if (isSignedIn) {
+    let widgetKey = "Youtube";
+    let widgetConfig = getWidgetLocalStore(widgetKey);
+    const card = document.getElementById(widgetKey + "Id");
+    if(card === null)
+        return;
+
+    if(isSignedIn) {
+        var youtubeSignInButtonEl = document.getElementById("Youtube-signIn");
+        if(youtubeSignInButtonEl) {
+            youtubeSignInButtonEl.id = "Youtube-signOut";
+            youtubeSignInButtonEl.innerText = "Sign Out";
+        }
         getUsersLikedVideos();
-    } else {
-        //
+        widgetConfig["innerCard"]["isSignedInStatus"] = "1";
     }
+    else{
+        var youtubeSignOutButtonEl = document.getElementById("Youtube-signOut");
+        if(youtubeSignOutButtonEl) {
+            youtubeSignOutButtonEl.id = "Youtube-signIn";
+            youtubeSignOutButtonEl.innerText = "Sign In";
+        }
+        deleteDiv(widgetKey + "-Liked" + "videos");
+        widgetConfig["innerCard"]["isSignedInStatus"] = "0";
+    }
+    setWidgetLocalStore(widgetKey,widgetConfig);
 }
 
 function getUsersLikedVideos() {
@@ -86,15 +100,14 @@ function getLikedPlaylist(playListID) {
         const card = document.getElementById(widgetKey + "Id");
         const innerWidgetKey = widgetKey + "-Liked" + "videos";
         const topicName = "Liked Videos";
-        if(card)
-            renderInnerCard(card,widgetKey,innerWidgetKey,topicName,listCardItemObj,3);
+        renderInnerCard(card,widgetKey,innerWidgetKey,topicName,listCardItemObj,3);
     });
 }
 
+// $( document ).ready(function() {
+//     handleYoutubeClientLoad();
+// });
 
-document.onreadystatechange = functionLoad;
-function functionLoad () {
-    if (document.readyState === "complete") {
-        handleYoutubeClientLoad();
-    }
-}
+$(window).on('load', function() {
+    handleYoutubeClientLoad();
+});

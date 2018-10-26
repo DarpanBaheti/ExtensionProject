@@ -13,7 +13,9 @@ function renderButtons(widgetKey, isActive) {
         checkbox.checked = true;
 
     var widgetDivId = widgetKey + "Id";
-    checkbox.addEventListener('change', (event) => {
+
+    $('body').off("change", "#" + widgetKey + "Add");
+    $('body').on("change", "#" + widgetKey + "Add", function(event) {
         if (event.target.checked) {
             var divElement = document.getElementById(widgetDivId);
             if(divElement)
@@ -25,9 +27,18 @@ function renderButtons(widgetKey, isActive) {
             if(localStorageRes != null)
                 widgetStatusList = JSON.parse(localStorageRes);
             else
-                widgetStatusList = {}
+                widgetStatusList = {};
             widgetStatusList[widgetKey] = "1";
             localStorage.setItem("widgetStatusList", JSON.stringify(widgetStatusList));
+
+            setTimeout(()=>{
+                let widgetKey = "Youtube";
+                let widgetConfig = getWidgetLocalStore(widgetKey);
+                if(widgetConfig["innerCard"]["isSignedInStatus"] == "1")
+                    updateSigninStatus(true);
+                else
+                    updateSigninStatus(false);
+            },100);
         }
         else {
             var divElement = document.getElementById(widgetDivId);
@@ -39,7 +50,7 @@ function renderButtons(widgetKey, isActive) {
                 localStorage.setItem("widgetStatusList", JSON.stringify(widgetStatusList));
             }
         }
-    })
+    });
 
     checkCont.innerHTML = widgetKey + "  ";
     checkCont.appendChild(checkbox);
