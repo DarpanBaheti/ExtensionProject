@@ -21,6 +21,7 @@ function oAuthTwitter(e) {
     twitterOAuthWindow = window.open(twitterSignInUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
     twitterOAuthWindow.focus();
 
+    var twitterSignInButtonEl = document.getElementById(e.target.id);
     var OauthInterval = setInterval(function() {
         if(twitterOAuthWindow.closed) {
             let widgetKey = "Twitter";

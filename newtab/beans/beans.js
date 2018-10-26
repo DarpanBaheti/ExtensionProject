@@ -57,7 +57,7 @@ function sampleWidget() {
 		listCardItemObj.push(new CardItemObj('http://placehold.it/70x50','Title1','#',''));
 		listCardItemObj.push(new CardItemObj('http://placehold.it/70x50','Title2','#',''));
 
-		const card = renderCard(this.widgetKey);
+		const card = renderCard(this.widgetKey,4);
 		const topicName = "Sample Feed";
 		const innerWidgetKey = this.widgetKey + "-SampleFeed"
 		renderInnerCard(card,this.widgetKey,innerWidgetKey,topicName,listCardItemObj);

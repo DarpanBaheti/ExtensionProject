@@ -68,10 +68,10 @@ function CardItemObj(imgSrc,title,href,text) {
 	}
 }
 
-function renderCard(widgetKey) {
+function renderCard(widgetKey,order=0) {
 	const container  = document.getElementById('container');
 	const card = document.createElement('div');
-	setAttributes(card,{"class":"card","id":widgetKey+"Id"});
+	setAttributes(card,{"class":"card","id":widgetKey+"Id","order":order});
 
 	attachCloseBut(widgetKey,card);
 	attachSetBut(widgetKey,card);
@@ -81,9 +81,24 @@ function renderCard(widgetKey) {
 	h1.style.background = getHeadingColor(widgetKey);
 	card.appendChild(h1);
 
-	container.insertBefore(card, container.childNodes[0]);
-
+	//container.insertBefore(card, container.childNodes[0]);
+    doReorderBeforeAppend2(container,card);
     return card;
+}
+
+function doReorderBeforeAppend2(container,card) {
+    var divArr = new Array();
+    var divChilds = container.children;
+    for (i = 0; i <= divChilds.length - 1; i++) {
+        if(divChilds[i].className == "card") {
+            divArr.push(divChilds[i]);
+        }
+    }
+    divArr.push(card);
+    divArr = divArr.sort(orderSort);
+    for (var i=0; i<divArr.length;i++) {
+        container.appendChild(divArr[i]);
+    }
 }
 
 function renderInnerCard(card,widgetKey,innerWidgetKey,topic,listCardItemObj,order) {

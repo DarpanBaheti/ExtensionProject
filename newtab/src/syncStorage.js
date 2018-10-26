@@ -57,7 +57,7 @@ function getRedditConfigJson(widgetKey) {
 
 function getYoutubeConfigJson(widgetKey) {
     var youtubeConfigLocal = {
-        rankCard: "2",
+        rankCard: "3",
         innerCard: {
             trendingCatLists: {
                 Videos: {
@@ -88,7 +88,7 @@ function getYoutubeConfigJson(widgetKey) {
 
 function getTwitterConfigJson(widgetKey) {
     var twitterConfigLocal = {
-        rankCard: "3",
+        rankCard: "2",
         innerCard: {
             trendingTwitterTopics: "0",
             followedUsers: {

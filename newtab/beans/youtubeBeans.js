@@ -11,7 +11,7 @@ function youtubeWidget(parameters) {
     };
 
     this.renderWidget = function() {
-        const card = renderCard(this.widgetKey);
+        const card = renderCard(this.widgetKey,3);
         this.loadTrendingCats(card,this.widgetKey,1);
         this.loadChannels(card,this.widgetKey,2);
 

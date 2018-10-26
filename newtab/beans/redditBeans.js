@@ -7,7 +7,7 @@ function redditWidget(parameters) {
     this.clientSecret = "PodkAe4ExHY_7cb1S45nH726ln4";
 
     this.renderWidget = function() {
-        const card = renderCard(this.widgetKey);
+        const card = renderCard(this.widgetKey,1);
         if(parameters.isSignedInStatus == "1") {
             this.loadUserHomeTimeLine(card,this.widgetKey);
         }

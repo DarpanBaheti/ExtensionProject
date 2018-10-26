@@ -4,7 +4,7 @@ function twitterWidget(parameters) {
     this.parameters = parameters;
 
     this.renderWidget = function() {
-        const card = renderCard(this.widgetKey);
+        const card = renderCard(this.widgetKey,2);
         this.loadFollowedUsers(card,this.widgetKey);
         if(parameters.trendingTwitterTopics == "1"){
             this.loadTrendingTwitterTopics(card,this.widgetKey);
