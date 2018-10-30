@@ -16,7 +16,7 @@ function twitterWidget(parameters) {
 
     this.loadTrendingTwitterTopics = function (card,widgetKey,order=2) {
         const loc = getWidgetLocalStore("userLocation");
-        const apiCall = "http://localhost:8081/TwitterTrendServlet" + "?country=" + loc.country;
+        const apiCall = BASE_SERVLET_URL + "/TwitterTrendServlet" + "?country=" + loc.country;
         let promise1 = fetchWidgetData(apiCall,this.parseData2);
         promise1.then( (data) => {
             cnt = 0;
@@ -33,7 +33,7 @@ function twitterWidget(parameters) {
 
     this.loadTwitterTopic = function(card,widgetKey,trendingTwitterTopic,innerWidgetKey,topicName,order=2) {
         const queryString = trendingTwitterTopic.replace(" ","%20").replace("#","%23");
-        const apiCall = "http://localhost:8081/TwitterSearchServlet" + "?query=" + queryString;
+        const apiCall = BASE_SERVLET_URL + "/TwitterSearchServlet" + "?query=" + queryString;
         loadInnerCard(apiCall,card,widgetKey,innerWidgetKey,topicName,this.parseData,order);
     };
 
@@ -50,13 +50,13 @@ function twitterWidget(parameters) {
     };
 
     this.loadUserTwitterTimeLine = function (card,widgetKey,innerWidgetKey,userName,topicName,order=1) {
-        apiCall = "http://localhost:8081/TwitterUserServlet" + "?user=" + userName;
+        apiCall = BASE_SERVLET_URL + "/TwitterUserServlet" + "?user=" + userName;
         loadInnerCard(apiCall,card,widgetKey,innerWidgetKey,topicName,this.parseData,order);
     };
 
     this.loadUserHomeTimeLine = function (card,widgetKey,order=0) {
         var uniqueUserId = localStorage.getItem("uniqueUserId");
-        apiCall = "http://localhost:8081/TwitterHomeTimeline" + "?userId=" + uniqueUserId;
+        apiCall = BASE_SERVLET_URL + "/TwitterHomeTimeline" + "?userId=" + uniqueUserId;
         const topicName = "Recent Feeds";
         const innerWidgetKey = widgetKey + "-" + "MyFeeds" + "Id";
         loadInnerCard(apiCall,card,widgetKey,innerWidgetKey,topicName,this.parseData,order);
@@ -76,41 +76,6 @@ function twitterWidget(parameters) {
         }
         return parsedData;
     };
-    
-    // this.parseData1 = function(data) {
-    //     console.log(data);
-    //     parsedData = new Array();
-    //     var feeds = data;
-    //     for (var i in feeds) {
-    //         var tweetusername = feeds[i].user.screenName;
-    //         var profileimage = feeds[i].user.profileImageUrlHttps;
-    //         var tweetid = feeds[i].id;
-    //         var isaretweet = false;
-    //         var status = feeds[i].text;
-    //
-    //         //If the tweet has been retweeted, get the profile pic of the tweeter
-    //         if(typeof feeds[i].retweetedStatus != 'undefined'){
-    //             tweetusername = feeds[i].retweetedStatus.user.screenName;
-    //             profileimage = feeds[i].retweetedStatus.user.profileImageUrlHttps;
-    //             tweetid = feeds[i].retweetedStatus.id;
-    //             isaretweet = true;
-    //             status = "[RT] " + feeds[i].retweetedStatus.text;
-    //         }
-    //
-    //         status = addlinks(status);
-    //
-    //         let parsedDataPoint = {
-    //             thumb: profileimage,
-    //             title: status,
-    //             link: "https://twitter.com/" + tweetusername + "/status/" + tweetid,
-    //             text: ""
-    //         };
-    //         parsedData.push(parsedDataPoint);
-    //
-    //         console.log(parsedDataPoint.thumb + " " + parsedDataPoint.link);
-    //     }
-    //     return parsedData;
-    // };
 
     this.parseData2 = function (data) {
         return data;

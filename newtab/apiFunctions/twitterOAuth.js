@@ -17,7 +17,8 @@ function handleTwitterOAuth(widgetKey) {
 
 function oAuthTwitter(e) {
     var uniqueUserId = localStorage.getItem("uniqueUserId");
-    twitterSignInUrl = 'http://localhost:8081/signInWithTwitter' + "?userId=" + uniqueUserId;
+    var twitterSignInUrl = BASE_SERVLET_URL + '/signInWithTwitter' + "?userId=" + uniqueUserId;
+
     twitterOAuthWindow = window.open(twitterSignInUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
     twitterOAuthWindow.focus();
 

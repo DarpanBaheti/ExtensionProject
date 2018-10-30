@@ -1,4 +1,7 @@
 
+var REDDIT_CLIENT_ID = "iYzb1bqskWDaDg";
+var REDDIT_STATE = "qwertyuiop"; // Random String
+
 function handleRedditOAuth(widgetKey) {
     $("#container").off("click", "#" + "Reddit-signIn");
     $("#container").on("click", "#" + "Reddit-signIn", function(e) {
@@ -15,11 +18,14 @@ function handleRedditOAuth(widgetKey) {
 }
 
 function oAuthReddit(e) {
+    var redditRedirectUri = BASE_URL + "/newtab/authorizedReddit.html";
+
     var redditSignInUrl = "https://www.reddit.com/api/v1/authorize?";
-    redditSignInUrl += "client_id=iYzb1bqskWDaDg&response_type=code&state=qwertyuiop";
-    redditSignInUrl += "&redirect_uri=http://localhost:8000/newtab/authorizedReddit.html&";
-    redditSignInUrl += "duration=permanent&";
-    redditSignInUrl += "scope=identity,mysubreddits,read";
+    redditSignInUrl += "client_id=" + REDDIT_CLIENT_ID;
+    redditSignInUrl += "&response_type=code&state=" + REDDIT_STATE;
+    redditSignInUrl += "&redirect_uri=" + redditRedirectUri;
+    redditSignInUrl += "&duration=permanent";
+    redditSignInUrl += "&scope=identity,mysubreddits,read";
 
     var redditOAuthWindow = window.open(redditSignInUrl, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
     redditOAuthWindow.focus();
@@ -43,7 +49,7 @@ function oAuthReddit(e) {
 }
 
 function redditOnSignOut() {
-    widgetKey = "Reddit";
+    let widgetKey = "Reddit";
     const localStorageRes = localStorage.getItem(widgetKey);
     const widgetConfig = JSON.parse(localStorageRes);
     widgetConfig["innerCard"]["isSignedInStatus"] = "0";

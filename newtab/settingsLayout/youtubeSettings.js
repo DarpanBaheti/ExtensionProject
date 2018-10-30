@@ -96,7 +96,7 @@ function attachYoutubeListeners(widgetKey,parameters) {
             let card = document.getElementById(widgetKey + "Id");
             let widgetConfig = getWidgetLocalStore(widgetKey);
             if (e.target.checked) {
-                new youtubeWidget("params").loadChannel(card,widgetKey,elId,elName,elTopicName);
+                new youtubeWidget("params").loadChannelWithName(card,widgetKey,elId,elName,elTopicName);
                 widgetConfig["innerCard"]["channelsList"][elName] = "1";
             }
             else {

@@ -1,3 +1,4 @@
+var YOUTUBE_API_KEY = "AIzaSyDXpwzqSs41Kp9IZj49efV3CSrVxUDAwS0";
 
 function getRecentUploads(channelName) {
     return new Promise(function(resolve) {
@@ -9,7 +10,7 @@ function getRecentUploads(channelName) {
             data: {
                 'part': 'contentDetails',
                 'id': channelName,
-                'key': 'AIzaSyDXpwzqSs41Kp9IZj49efV3CSrVxUDAwS0'
+                'key': YOUTUBE_API_KEY
             },
             success: function (data) {
                 var uploads = data.items[0].contentDetails.relatedPlaylists.uploads;
@@ -29,7 +30,7 @@ function getRecentUploads(channelName) {
                     'playlistId': uploads,
                     'chart': 'mostPopular',
                     'maxResults': limit,
-                    'key': 'AIzaSyDXpwzqSs41Kp9IZj49efV3CSrVxUDAwS0'
+                    'key': YOUTUBE_API_KEY
                 },
                 success: function (data) {
                     for (var i = 0; i < limit; i++) {

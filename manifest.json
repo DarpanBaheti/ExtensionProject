@@ -15,17 +15,6 @@
     "https://*/*"
   ],
 
-  "omnibox": { "keyword" : "yeah" },
-
-  "browser_action": {
-    "default_icon": {
-      "19": "icons/19x19.png",
-      "38": "icons/38x38.png"
-    },
-    "default_title": "That's the tool tip",
-    "default_popup": "browseraction/popup.html"
-  },
-
   "background": {
     "scripts": ["backscript.js"],
     "persistent": false
@@ -38,7 +27,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["contentScripts/content.js","contentScripts/contentRedditFollow.js","contentScripts/contentSyncLocal.js","contentScripts/contentUpdateSubreddit.js"],
+      "js": ["contentScripts/contentRedditFollow.js","contentScripts/contentSyncLocal.js","contentScripts/contentUpdateSubreddit.js"],
       "css":["contentScripts/redditFollow.css"],
       "run_at": "document_end"
     }

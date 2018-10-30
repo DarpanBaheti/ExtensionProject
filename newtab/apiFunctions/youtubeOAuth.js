@@ -59,7 +59,7 @@ function updateSigninStatus(isSignedIn) {
         }
         getUsersLikedVideos();
         getUsersSubscriptionList();
-        getActivities();
+        // getActivities();
         widgetConfig["innerCard"]["isSignedInStatus"] = "1";
     }
     else{

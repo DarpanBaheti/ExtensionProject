@@ -50,7 +50,6 @@ function loadInnerCard(apiCall,card,widgetKey,innerWidgetKey,topicName,parseData
 
 function sampleWidget() {
 	this.widgetKey = "SampleWidget";
-	this.apiUrl = "http://localhost:8081/SampleServlet";
 
 	this.renderWidget = function() {
 		listCardItemObj = new Array();

@@ -78,7 +78,7 @@ function attachUpdateCloseBut(innerCard,subRedditName) {
 
 function attachUpdateInnerCard(card,widgetKey,subRedditName) {
     const innerCard = document.createElement('div');
-    setAttributes(innerCard,{"class":"innerCard","id":subRedditName + "-update-innerCard"});
+    setAttributes(innerCard,{"class":"innerCard","id":subRedditName + "-update-innerCard","order":0});
 
     attachUpdateCloseBut(innerCard,subRedditName);
 

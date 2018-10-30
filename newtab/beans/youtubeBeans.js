@@ -1,8 +1,8 @@
+var YOUTUBE_API_KEY = "AIzaSyDXpwzqSs41Kp9IZj49efV3CSrVxUDAwS0";
+
 function youtubeWidget(parameters) {
     this.widgetKey = "Youtube";
-    this.apiUrl = "http://localhost:8081/YoutubeServlet";
     this.parameters = parameters;
-    this.loc = getWidgetLocalStore("userLocation");
 
     this.vidCategoryMap = {
         Videos: "0",
@@ -32,12 +32,14 @@ function youtubeWidget(parameters) {
     };
 
     this.loadTrendingCat = function (card,widgetKey,innerWidgetKey,vidCategoryID,topicName,order=1) {
+        let apiCall = BASE_SERVLET_URL + "/YoutubeServlet";
+
         trendingCat = this.parameters["trendingCatLists"];
         let loc = getWidgetLocalStore("userLocation");
         if(trendingCat[vidCategoryID].loc == "self")
-            apiCall = this.apiUrl + "?" + "countryCode=" + loc.countryCode;
+            apiCall += "?" + "countryCode=" + loc.countryCode;
         else
-            apiCall = this.apiUrl + "?" + "countryCode=" + "world";
+            apiCall += "?" + "countryCode=" + "world";
         apiCall += "&" + "vidCategoryID=" + this.vidCategoryMap[vidCategoryID];
         loadInnerCard(apiCall,card,widgetKey,innerWidgetKey,topicName,this.parseData,order);
     };
@@ -48,16 +50,22 @@ function youtubeWidget(parameters) {
             if (channelsList[channelName] == "1") {
                 const innerWidgetKey = widgetKey + "-" + channelName + "Id";
                 const topicName = "Channel: " + channelName;
-
-                let apiCall = "https://www.googleapis.com/youtube/v3/channels?key=AIzaSyDXpwzqSs41Kp9IZj49efV3CSrVxUDAwS0&part=contentDetails,snippet&forUsername=" + channelName;
-                var promise1 = fetchWidgetData(apiCall,this.parseData);
-                promise1.then(function (data) {
-                    let channelId = data.items[0].id;
-                    new youtubeWidget("params").loadChannel(card, widgetKey, innerWidgetKey,channelId,topicName,order=2);
-                });
-                // this.loadChannel(card, widgetKey, innerWidgetKey,channelName,topicName,order);
+                this.loadChannelWithName(card, widgetKey, innerWidgetKey,channelName,topicName,order);
             }
         }
+    };
+
+    this.loadChannelWithName = function(card,widgetKey,innerWidgetKey,channelName,topicName, order=2) {
+        let apiCall = "https://www.googleapis.com/youtube/v3/channels?";
+        apiCall += "key=" + YOUTUBE_API_KEY;
+        apiCall += "&part=contentDetails,snippet";
+        apiCall += "&forUsername=" + channelName;
+
+        var promise1 = fetchWidgetData(apiCall,this.parseData);
+        promise1.then(function (data) {
+            let channelId = data.items[0].id;
+            new youtubeWidget("params").loadChannel(card, widgetKey, innerWidgetKey,channelId,topicName,order=2);
+        });
     };
 
     this.loadChannel = function (card,widgetKey,innerWidgetKey,channelName,topicName, order=2) {
