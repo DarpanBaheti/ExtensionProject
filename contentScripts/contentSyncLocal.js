@@ -4,7 +4,7 @@
 // --------------------------------------------------------------- Sync Local Storage Message Passing
 
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
-    if (msg.action == 'updateLocalStorage') {
+    if (msg.action === "updateLocalStorage") {
         var diffOfList = msg.data;
         console.log("Recieved updateLocalStorage message from background. Forwarding to script.js");
         var selectionFired = new CustomEvent('updateLocalStorage', {'detail': {"data": diffOfList}});

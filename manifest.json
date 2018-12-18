@@ -16,7 +16,10 @@
   ],
 
   "background": {
-    "scripts": ["backscript.js"],
+    "scripts": [
+      "constants.js",
+      "backscript.js"
+    ],
     "persistent": false
   },
 

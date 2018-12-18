@@ -1,15 +1,14 @@
-
 // ---------------------------------------------------------------
 // --------------------------------------------------------------- Notification Logic
 
 var delay = 24 * 60 * 60 * 1000;
-delay = 10000;
+// delay = 10000;
 setInterval(function() {
     getWidgetList();
 }, delay);
 
 function getWidgetList() {
-    var widgetListApi = "http://localhost:8081/getWidgetList";
+    var widgetListApi = BASE_SERVLET_URL + "/getWidgetList";
     fetch(widgetListApi)
         .then(
             function(response) {
@@ -78,13 +77,16 @@ function sendUpdateLocalStorage(diffOfList) {
     //     console.log("Sending UpdateLocalStorage message from background to content Script");
     //     chrome.tabs.sendMessage( tabs[0].id, {action: "updateLocalStorage", data: diffOfList}, function(response) {});
     // });
-    chrome.tabs.query({},function(tabs){
-        tabs.forEach(function(tab){
-            if(tab.url.startsWith("http://localhost:8000/newtab/index.html")) {
-                chrome.tabs.sendMessage( tab.id, {action: "updateLocalStorage", data: diffOfList}, function(response) {});
-            }
+    var updateLocalStorageInterval = setInterval(function () {
+        chrome.tabs.query({},function(tabs){
+            tabs.forEach(function(tab){
+                if(tab.url.startsWith(BASE_NEW_TAB_URL)) {
+                    chrome.tabs.sendMessage( tab.id, {action: "updateLocalStorage", data: diffOfList}, function(response) {});
+                    clearInterval(updateLocalStorageInterval);
+                }
+            });
         });
-    });
+    }, 1000);
 }
 
 
@@ -103,7 +105,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 reloadNewTabPage = function() {
     chrome.tabs.query({},function(tabs){
         tabs.forEach(function(tab){
-            if(tab.url.startsWith("http://localhost:8000/newtab/index.html")) {
+            if(tab.url.startsWith(BASE_NEW_TAB_URL)) {
                 chrome.tabs.reload(tab.id);
                 console.log("New Tabs Reloaded!!")
             }
@@ -120,7 +122,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
         console.log("Background redditButtonClicked");
         chrome.tabs.query({},function(tabs){
             tabs.forEach(function(tab){
-                if(tab.url.startsWith("http://localhost:8000/newtab/index.html")) {
+                if(tab.url.startsWith(BASE_NEW_TAB_URL)) {
                     chrome.tabs.sendMessage( tab.id, {action: "updateSubRedditList", subRedditName: msg.subRedditName}, function(response) {});
                 }
             });

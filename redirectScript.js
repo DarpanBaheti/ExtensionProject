@@ -1,1 +1,1 @@
-window.location.replace("http://localhost:8000/newtab/index.html");
+window.location.replace(BASE_NEW_TAB_URL);
